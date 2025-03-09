@@ -2,13 +2,13 @@
 import './App.css'
 
 function App() {
- 
+
 
   return (
     <>
-      
-      <h1 className='bg-red-200'>Vite + React</h1>
- 
+     
+      <h1 className='text-7xl bg-red-600'>Vite + React</h1>
+      <button className='btn btn-warning'> hi</button>
       
     </>
   )
