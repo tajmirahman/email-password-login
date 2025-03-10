@@ -4,25 +4,45 @@ import { useState } from "react";
 
 const SignUp = () => {
 
-    const [errorMessage,setErrorMessage]=useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [success, setSuccess] = useState(false);
 
 
-    const handleSignUp=(e)=>{
+    const handleSignUp = (e) => {
         e.preventDefault();
-        const email=e.target.email.value;
-        const password=e.target.password.value;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+
+        setErrorMessage('');
+        setSuccess(false);
 
         console.log(email, password);
 
-        createUserWithEmailAndPassword(auth,email,password)
-        .then((result)=>{
-            console.log(result)
-            setErrorMessage('')
-        })
-        .catch(error=>{
-            console.log('Error',error.message);
-            setErrorMessage(error.message)
-        })
+        // password validation
+        if (password.length < 6) {
+            setErrorMessage('Password must be 6 characters or longer')
+            return;
+        }
+
+        // strong password validation
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+
+        if (!passwordRegex.test(password)) {
+            setErrorMessage('At least one uppercase, one lowercase,one number and one special character also length min 6!')
+            return;
+        }
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((result) => {
+                console.log(result)
+                setSuccess(true);
+            })
+            .catch(error => {
+                console.log('Error', error.message);
+                setErrorMessage(error.message);
+                setSuccess(false)
+
+            })
 
     }
 
@@ -35,7 +55,7 @@ const SignUp = () => {
                     <fieldset className="fieldset">
 
                         <label className="fieldset-label">Email</label>
-                        <input type="email" name="email" className="input" placeholder="Email" required/>
+                        <input type="email" name="email" className="input" placeholder="Email" required />
 
                         <label className="fieldset-label">Password</label>
                         <input type="password" name="password" className="input" placeholder="Password" />
@@ -47,6 +67,9 @@ const SignUp = () => {
                 </form>
                 {
                     errorMessage && <p className="text-red-600">{errorMessage}</p>
+                }
+                {
+                    success && <p className="text-green-700 font-bold text-xl">{'Create successfully'}</p>
                 }
             </div>
         </div>
