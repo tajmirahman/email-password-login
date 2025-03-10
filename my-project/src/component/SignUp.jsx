@@ -1,11 +1,13 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import auth from "../firebase.init";
 import { useState } from "react";
+import { FaEye } from "react-icons/fa";
 
 const SignUp = () => {
 
     const [errorMessage, setErrorMessage] = useState('');
     const [success, setSuccess] = useState(false);
+    const [showPassword, setShowPasswrod] = useState(false);
 
 
     const handleSignUp = (e) => {
@@ -50,7 +52,7 @@ const SignUp = () => {
 
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl my-6 border-2 mx-auto">
             <h1 className="text-3xl font-bold text-center mt-3">SignUp now!</h1>
-            <div className="card-body">
+            <div className="card-body relative">
                 <form onSubmit={handleSignUp}>
                     <fieldset className="fieldset">
 
@@ -58,7 +60,9 @@ const SignUp = () => {
                         <input type="email" name="email" className="input" placeholder="Email" required />
 
                         <label className="fieldset-label">Password</label>
-                        <input type="password" name="password" className="input" placeholder="Password" />
+                        <input type={showPassword ? 'text' : 'password'} name="password" className="input" placeholder="Password" />
+
+                        <button onClick={() => setShowPasswrod(!showPassword)} className="text-2xl absolute right-10 top-32"><FaEye /></button>
 
                         <div><a className="link link-hover">Forgot password?</a></div>
 
