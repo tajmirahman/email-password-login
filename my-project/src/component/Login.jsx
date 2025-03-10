@@ -1,22 +1,32 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import auth from "../firebase.init";
+import { useState } from "react";
 
 
 const Login = () => {
+
+    const [success, setSuccess]=useState(false);
+    const [loginError, setLoginError]=useState('');
 
     const handleLoginForm=e=>{
         e.preventDefault();
         const email=e.target.email.value;
         const password=e.target.password.value;
 
+        // reset value
+        setSuccess(false);
+        setLoginError('')
+
         console.log(email, password);
 
         signInWithEmailAndPassword(auth,email,password)
         .then(result=>{
             console.log(result.user);
+            setSuccess(true);
         })
         .catch(error=>{
             console.log('Error', error.message);
+            setLoginError(error.message);
         })
 
 
@@ -43,6 +53,12 @@ const Login = () => {
                             <button className="btn btn-neutral mt-4">Login</button>
                         </fieldset>
                     </form>
+                    {
+                        success && <p className="text-green-600 text-xl m-3">Login Successfully</p>
+                    }
+                    {
+                        loginError && <p className="text-red-500 text-xl m-2">Email & Password does not match</p>
+                    }
                 </div>
             </div>
         </div>
