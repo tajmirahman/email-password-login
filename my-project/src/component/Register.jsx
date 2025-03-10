@@ -1,13 +1,26 @@
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import auth from "../firebase.init";
 
 
 const Register = () => {
 
-    const handleRegister=(event)=>{
+    const handleRegister = (event) => {
         event.preventDefault();
-        const email=event.target.email.value;
-        const password=event.target.password.value;
-        console.log(email,password);
+        const email = event.target.email.value;
+        const password = event.target.password.value;
+        console.log(email, password);
+
+        // Create user email and password
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((result)=>{
+            console.log(result)
+        })
+        .catch(error=>{
+            console.log(error);
+        })
     }
+
+    
 
 
     return (
