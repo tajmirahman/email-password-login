@@ -1,6 +1,7 @@
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import auth from "../firebase.init";
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 
 const Login = () => {
@@ -45,10 +46,16 @@ const Login = () => {
     const handleForgetPassword=()=>{
         console.log('forget password is comming', emailRef.current.value);
         const email=emailRef.current.value;
-        sendPasswordResetEmail(auth,email)
-        .then(()=>{
-            alert('password reset mail send, please check your email')
-        })
+        if(!email){
+            alert('please provide a varified email');
+        }
+        else{
+            sendPasswordResetEmail(auth,email)
+            .then(()=>{
+                alert('password reset mail send, please check your email')
+            })
+        }
+        
     }
 
 
@@ -74,6 +81,7 @@ const Login = () => {
 
                             <button className="btn btn-neutral mt-4">Login</button>
                         </fieldset>
+                        <p>If you do not have account? please <Link className="underline text-green-400" to={'/signUp'}>Sign Up</Link> </p>
                     </form>
                     {
                         success && <p className="text-green-600 text-xl m-3">Login Successfully</p>

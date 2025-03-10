@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/
 import auth from "../firebase.init";
 import { useState } from "react";
 import { FaEye } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
 
@@ -90,6 +91,7 @@ const SignUp = () => {
 
                         <button className="btn btn-neutral ">Sign Up</button>
                     </fieldset>
+                    <p>if you have already account? please <Link className="underline text-green-400" to={'/login'}>Login</Link></p>
                 </form>
                 {
                     errorMessage && <p className="text-red-600">{errorMessage}</p>
