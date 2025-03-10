@@ -14,11 +14,14 @@ const SignUp = () => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
+        const checkbox=e.target.terms.checked;
 
         setErrorMessage('');
         setSuccess(false);
 
-        console.log(email, password);
+        console.log(email, password,checkbox);
+
+        
 
         // password validation
         if (password.length < 6) {
@@ -34,6 +37,11 @@ const SignUp = () => {
             return;
         }
 
+        if(!checkbox){
+            setErrorMessage('Please select our terms and condition');
+            return;
+        }
+
         createUserWithEmailAndPassword(auth, email, password)
             .then((result) => {
                 console.log(result)
@@ -43,7 +51,6 @@ const SignUp = () => {
                 console.log('Error', error.message);
                 setErrorMessage(error.message);
                 setSuccess(false)
-
             })
 
     }
@@ -64,9 +71,15 @@ const SignUp = () => {
 
                         <button onClick={() => setShowPasswrod(!showPassword)} className="text-2xl absolute right-10 top-32"><FaEye /></button>
 
+
                         <div><a className="link link-hover">Forgot password?</a></div>
 
-                        <button className="btn btn-neutral mt-4">Login</button>
+                        <div className="flex items-center gap-3 my-6">
+                            <input type="checkbox" name="terms" className="checkbox checkbox-primary" />
+                            <p>Please select terms and condition</p>
+                        </div>
+
+                        <button className="btn btn-neutral ">Sign Up</button>
                     </fieldset>
                 </form>
                 {
