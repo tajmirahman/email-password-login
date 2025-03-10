@@ -22,7 +22,16 @@ const Login = () => {
         signInWithEmailAndPassword(auth,email,password)
         .then(result=>{
             console.log(result.user);
-            setSuccess(true);
+
+            
+            // Email Varification
+            if(!result.user.emailVerified){
+                alert('Please Varify your email')
+            }
+            else{
+                setSuccess(true);
+            }
+
         })
         .catch(error=>{
             console.log('Error', error.message);
@@ -57,7 +66,10 @@ const Login = () => {
                         success && <p className="text-green-600 text-xl m-3">Login Successfully</p>
                     }
                     {
-                        loginError && <p className="text-red-500 text-xl m-2">Email & Password does not match</p>
+                        loginError && <>
+                        <p className="text-red-500 text-xl m-2">Email & Password does not match</p>
+                        
+                        </>
                     }
                 </div>
             </div>
